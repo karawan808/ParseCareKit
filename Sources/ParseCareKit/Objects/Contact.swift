@@ -127,7 +127,7 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
         
         switch careKitEntity {
         case .contact(let entity):
-            return try Self.copyCareKit(entity)
+            return try Contact.copyCareKit(entity)
         default:
             print("Error in \(className).new(with:). The wrong type of entity was passed \(careKitEntity)")
             throw ParseCareKitError.classTypeNotAnEligibleType
@@ -292,7 +292,7 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
             throw ParseCareKitError.cantCastToNeededClassType
         }
         let encoded = try ParseCareKitUtility.encoder().encode(contact)
-        let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
+        let decoded = try ParseCareKitUtility.decoder().decode(Contact.self, from: encoded)
         decoded.entityId = contact.id
         return decoded
     }

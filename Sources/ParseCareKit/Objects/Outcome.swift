@@ -83,7 +83,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         
         switch careKitEntity {
         case .outcome(let entity):
-            return try Self.copyCareKit(entity)
+            return try Outcome.copyCareKit(entity)
         default:
             print("Error in \(className).new(with:). The wrong type of entity was passed \(careKitEntity)")
             throw ParseCareKitError.classTypeNotAnEligibleType
@@ -233,7 +233,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
                 }
                 foundObject.notes?.forEach{ $0.delete(callbackQueue: .global(qos: .background)){ _ in } } //CareKit causes ParseCareKit to create new ones of these, this is removing duplicates
                 
-                guard let copied = try? Self.copyValues(from: self, to: foundObject) else {
+                guard let copied = try? Outcome.copyValues(from: self, to: foundObject) else {
                     print("Error in \(self.className).tombstsone(). Couldn't cast to self")
                     completion(false,ParseCareKitError.cantCastToNeededClassType)
                     return
@@ -253,7 +253,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         }
     }
     
-    public class func copyValues(from other: Outcome, to here: Outcome) throws -> Self{
+    public class func copyValues(from other: Outcome, to here: Outcome) throws -> Self {
         var here = here
         here.copyCommonValues(from: other)
         here.taskOccurrenceIndex = other.taskOccurrenceIndex
@@ -274,7 +274,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         }
         
         let encoded = try ParseCareKitUtility.encoder().encode(outcome)
-        let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
+        let decoded = try ParseCareKitUtility.decoder().decode(Outcome.self, from: encoded)
         decoded.entityId = outcome.id
         return decoded
     }

@@ -113,7 +113,7 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
     public func new(with careKitEntity: OCKEntity) throws -> PCKSynchronizable {
         switch careKitEntity {
         case .carePlan(let entity):
-            return try Self.copyCareKit(entity)
+            return try CarePlan.copyCareKit(entity)
         default:
             print("Error in \(className).new(with:). The wrong type of entity was passed \(careKitEntity)")
             throw ParseCareKitError.classTypeNotAnEligibleType
@@ -273,7 +273,7 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
             throw ParseCareKitError.cantCastToNeededClassType
         }
         let encoded = try ParseCareKitUtility.encoder().encode(carePlan)
-        let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
+        let decoded = try ParseCareKitUtility.decoder().decode(CarePlan.self, from: encoded)
         decoded.entityId = carePlan.id
         return decoded
     }

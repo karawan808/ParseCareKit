@@ -84,7 +84,7 @@ open class Note: PCKObjectable {
     
     open class func copyCareKit(_ note: OCKNote) throws -> Note {
         let encoded = try ParseCareKitUtility.encoder().encode(note)
-        return try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
+        return try ParseCareKitUtility.decoder().decode(Note.self, from: encoded)
     }
     
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
@@ -143,7 +143,7 @@ open class Note: PCKObjectable {
                 //var returnNotes = notes!
                 for (index, note) in localNotes.enumerated(){
                     guard let replaceNote = localNotes.first(where: {$0.uuid == note.uuid}),
-                          let updatedNote = try? Self.copyValues(from: note, to: replaceNote) else {
+                          let updatedNote = try? Note.copyValues(from: note, to: replaceNote) else {
                         continue
                     }
                     

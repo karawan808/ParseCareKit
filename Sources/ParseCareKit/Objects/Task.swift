@@ -116,7 +116,7 @@ public final class Task: PCKVersionable, PCKSynchronizable {
         
         switch careKitEntity {
         case .task(let entity):
-            return try Self.copyCareKit(entity)
+            return try Task.copyCareKit(entity)
         default:
             print("Error in \(className).new(with:). The wrong type of entity was passed \(careKitEntity)")
             throw ParseCareKitError.classTypeNotAnEligibleType
@@ -280,7 +280,7 @@ public final class Task: PCKVersionable, PCKSynchronizable {
         }
         
         let encoded = try ParseCareKitUtility.encoder().encode(task)
-        let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
+        let decoded = try ParseCareKitUtility.decoder().decode(Task.self, from: encoded)
         decoded.entityId = task.id
         return decoded
     }

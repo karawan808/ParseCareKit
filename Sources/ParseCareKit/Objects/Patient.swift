@@ -116,7 +116,7 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
     
         switch careKitEntity {
         case .patient(let entity):
-            return try Self.copyCareKit(entity)
+            return try Patient.copyCareKit(entity)
         default:
             print("Error in \(className).new(with:). The wrong type of entity was passed \(careKitEntity)")
             throw ParseCareKitError.classTypeNotAnEligibleType

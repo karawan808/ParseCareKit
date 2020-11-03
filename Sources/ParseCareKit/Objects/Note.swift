@@ -134,7 +134,7 @@ open class Note: PCKObjectable {
             completion(nil)
             return
         }
-        let query = Self.query(containedIn(key: kPCKObjectableUUIDKey, array: uuids))
+        let query = Note.query(containedIn(key: kPCKObjectableUUIDKey, array: uuids))
         query.find(callbackQueue: .global(qos: .background)){ results in
             
             switch results {

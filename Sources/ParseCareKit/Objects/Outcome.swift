@@ -157,7 +157,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
     
     public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
-        let query = Self.query(kPCKObjectableClockKey >= localClock)
+        let query = Outcome.query(kPCKObjectableClockKey >= localClock)
         _ = query.order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
         _ = query.includeAll()
         query.find(callbackQueue: .global(qos: .background)){ results in
@@ -404,12 +404,12 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
     }
    
     func findOutcomes() throws -> [Outcome] {
-        let query = Self.queryNotDeleted()
+        let query = Outcome.queryNotDeleted()
         return try query.find()
     }
     
     public func findOutcomesInBackground(completion: @escaping([Outcome]?,Error?)->Void) {
-        let query = Self.queryNotDeleted()
+        let query = Outcome.queryNotDeleted()
         query.find(callbackQueue: .global(qos: .background)){ results in
             
             switch results {

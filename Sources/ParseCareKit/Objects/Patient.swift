@@ -131,7 +131,7 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
         }
 
         //Check to see if already in the cloud
-        let query = Self.query(kPCKObjectableUUIDKey == uuid)
+        let query = Patient.query(kPCKObjectableUUIDKey == uuid)
         _ = query.includeAll()
         query.first(callbackQueue: .global(qos: .background)){ result in
            
@@ -205,7 +205,7 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
     
     public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
-        let query = Self.query(kPCKObjectableClockKey >= localClock)
+        let query = Patient.query(kPCKObjectableClockKey >= localClock)
         _ = query.order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
         _ = query.includeAll()
         query.find(callbackQueue: .global(qos: .background)){ results in
